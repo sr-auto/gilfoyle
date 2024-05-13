@@ -123,7 +123,8 @@ class Report:
                 "max_cols":len(dataframe.columns),
                 "index":False
             }
-            format_options.update(format_opts)
+            if format_opts != None:
+                format_options.update(format_opts)
             formatted_df = dataframe.to_html(**format_options)
             return formatted_df
 
