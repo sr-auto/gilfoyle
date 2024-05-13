@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='gilfoyle-forked',
     packages=['gilfoyle'],
-    version='1.0.0',
+    version='1.1.0',
     license='MIT',
     description='Gilfoyle is a Python-based report generator for data scientists who use Pandas.',
     long_description=long_description,
