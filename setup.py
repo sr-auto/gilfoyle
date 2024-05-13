@@ -6,7 +6,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='gilfoyle',
+    name='gilfoyle-forked',
     packages=['gilfoyle'],
     version='0.915',
     license='MIT',
