@@ -65,6 +65,7 @@ class Report:
                  page_notification=None,
                  page_metrics=None,
                  page_dataframe=None,
+                 page_dataframe_format_opts=None,
                  page_visualisation=None,
                  page_background=None):
         """Add a new page to the payload for the report.
@@ -80,6 +81,7 @@ class Report:
             page_notification: Page notification text
             page_metrics: Dictionary of page metrics
             page_dataframe: Pandas dataframe with formatted headers
+            page_dataframe_format_opts: Dataframe format options
             page_visualisation: Image of data visualisation to include.
             page_background: Image path of cover background image.
 
@@ -95,7 +97,7 @@ class Report:
                 'page_message': page_message,
                 'page_notification': page_notification,
                 'page_metrics': page_metrics,
-                'page_dataframe': self.format_dataframe(page_dataframe),
+                'page_dataframe': self.format_dataframe(page_dataframe, page_dataframe_format_opts),
                 'page_visualisation': page_visualisation,
                 'page_background': page_background,
                 }
@@ -103,7 +105,7 @@ class Report:
         return payload
 
     @staticmethod
-    def format_dataframe(dataframe):
+    def format_dataframe(dataframe, format_opts):
         """Returns the HTML of a reformatted dataframe for use in the report.
 
         Args:
@@ -114,10 +116,15 @@ class Report:
         """
 
         if isinstance(dataframe, pd.DataFrame):
-            formatted_df = dataframe.to_html(classes=['dataframe', 'table', 'is-striped', 'is-fullwidth'],
-                                             max_rows=13,
-                                             max_cols=10,
-                                             index=False)
+            format_options = {
+                "classes":['dataframe', 'table', 'is-striped', 'is-fullwidth'],
+                "escape":False,
+                "max_rows":len(dataframe.index),
+                "max_cols":len(dataframe.columns),
+                "index":False
+            }
+            format_options.update(format_opts)
+            formatted_df = dataframe.to_html(**format_options)
             return formatted_df
 
     """
