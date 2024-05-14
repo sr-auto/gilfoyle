@@ -66,6 +66,7 @@ class Report:
                  page_metrics=None,
                  page_dataframe=None,
                  page_dataframe_format_opts=None,
+                 page_dataframe_custom_css = "",
                  page_visualisation=None,
                  page_background=None):
         """Add a new page to the payload for the report.
@@ -97,7 +98,7 @@ class Report:
                 'page_message': page_message,
                 'page_notification': page_notification,
                 'page_metrics': page_metrics,
-                'page_dataframe': self.format_dataframe(page_dataframe, page_dataframe_format_opts),
+                'page_dataframe': self.format_dataframe(page_dataframe, page_dataframe_format_opts, page_dataframe_custom_css),
                 'page_visualisation': page_visualisation,
                 'page_background': page_background,
                 }
@@ -105,7 +106,7 @@ class Report:
         return payload
 
     @staticmethod
-    def format_dataframe(dataframe, format_opts):
+    def format_dataframe(dataframe, format_opts, custom_css = ""):
         """Returns the HTML of a reformatted dataframe for use in the report.
 
         Args:
@@ -126,6 +127,7 @@ class Report:
             if format_opts != None:
                 format_options.update(format_opts)
             formatted_df = dataframe.to_html(**format_options)
+            formatted_df = custom_css + formatted_df
             return formatted_df
 
     """
